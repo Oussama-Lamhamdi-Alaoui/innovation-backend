@@ -13,6 +13,7 @@
   "author": "LAMHAMDIA ALAOUI Oussama, LAACHIR Ayoub",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.2",
     "dayjs": "^1.10.7",
     "dotenv": "^16.0.0",
