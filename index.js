@@ -1,17 +1,13 @@
-import express from 'express'
-import bp from 'body-parser'
+import app from './app.js'
+import connectToMongo from './mongo.js'
 
-const { urlencoded, json } = bp
+const PORT = process.env.PORT || 4000
 
-const app = express()
+async function startServer() {
+  await connectToMongo
+  app.listen(PORT, () => {
+    console.log(`Server running http://localhost:${PORT} 🚀`)
+  })
+}
 
-app.use(urlencoded({ extended: true }))
-app.use(json())
-
-app.get('/', (req, res) => {
-  res.json({ status: 'OK' })
-})
-
-app.listen(8080, () => {
-  console.log('Server on http://localhost:8080 🚀')
-})
+startServer()
