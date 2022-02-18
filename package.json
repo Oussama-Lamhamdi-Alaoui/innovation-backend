@@ -1,0 +1,26 @@
+{
+  "name": "innovation-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .js,.mjs"
+  },
+  "type": "module",
+  "author": "LAMHAMDIA ALAOUI Oussama, LAACHIR Ayoub",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest": "^26.1.1",
+    "jest": "^27.5.1",
+    "prettier": "^2.5.1"
+  }
+}
