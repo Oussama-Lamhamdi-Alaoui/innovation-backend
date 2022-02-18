@@ -11,11 +11,12 @@ export async function generateJWT({
   expiration = jwtConfig.expiration,
   timeUnit = jwtConfig.timeUnit,
   secret = jwtConfig.secret,
+  user,
 }) {
   const payload = {
     exp: dayjs().add(expiration, timeUnit).unix(),
     // Other dummy information this can be a user id /role in the future
-    k1: 'v1',
+    user: { id: user._id },
   }
 
   const token = jwt.sign(payload, secret)
