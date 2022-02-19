@@ -8,6 +8,7 @@ import http from 'http'
 import app from './app.js'
 import connectToMongo from './mongo.js'
 import typeDefs from './schema.js'
+import resolvers from './resolvers.js'
 
 async function startServer() {
   await connectToMongo()
@@ -16,6 +17,7 @@ async function startServer() {
 
   const server = new ApolloServer({
     typeDefs,
+    resolvers,
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       ApolloServerPluginLandingPageGraphQLPlayground(),
