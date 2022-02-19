@@ -18,6 +18,7 @@ const typeDefs = gql`
 
   type Query {
     videosForHome: [Video!]!
+    video(id: ID!): Video
   }
 `
 export default typeDefs

@@ -7,6 +7,9 @@ const resolvers = {
     videosForHome: (parent, args, ctx, info) => {
       return dummyVideos
     },
+    video: (_, { id: argId }) => {
+      return dummyVideos.find(({ id }) => id === argId)
+    },
   },
   Video: {
     owner: ({ ownerId }, __) => {
