@@ -18,6 +18,13 @@ async function startServer() {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    context: ({ req }) => {
+      const { user } = req
+      return {
+        user,
+        req,
+      }
+    },
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       ApolloServerPluginLandingPageGraphQLPlayground(),

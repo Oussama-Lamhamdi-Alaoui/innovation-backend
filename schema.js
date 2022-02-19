@@ -24,7 +24,6 @@ const typeDefs = gql`
   input AddVideoInput {
     title: String!
     description: String
-    ownerId: ID!
     thumbnail: String
     length: Int
   }
