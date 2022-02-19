@@ -1,5 +1,5 @@
 import { ForbiddenError } from 'apollo-server-core'
-import { getUserById } from './models/user.js'
+import { getUserById, getUserByEmail, comparePassword } from './models/user.js'
 import {
   createVideo,
   getVideoById,
@@ -7,6 +7,7 @@ import {
   getVideosByOwnerId,
 } from './models/video.js'
 import { requireUser } from './permissions.js'
+import { generateJWT } from './jwt.js'
 
 const resolvers = {
   Query: {
@@ -30,6 +31,44 @@ const resolvers = {
   },
 
   Mutation: {
+    login: async (_, args, ctx, info) => {
+      const { email, password } = args.input
+
+      //Dummy validation
+      if (!email || !password)
+        return {
+          success: false,
+          message: `Valid Email or Password are Required`,
+        }
+      const userWithEmail = await getUserByEmail(email)
+
+      if (!userWithEmail)
+        return {
+          success: false,
+          message: `Wrong Email or Password`,
+        }
+
+      const isCorrectPassword = await comparePassword(
+        password,
+        userWithEmail.password
+      )
+      if (!isCorrectPassword)
+        return {
+          success: false,
+          message: `Wrong Email or Password`,
+        }
+      //Before returning the user you might want to add a DTO layer
+      //to Stop information such as password, _id (internal ID) from being sent.
+
+      const token = await generateJWT({ user: userWithEmail })
+
+      return {
+        success: true,
+        message: `Logged in succesfuly`,
+        token: token,
+      }
+    },
+
     addVideo: requireUser(async (_, args, ctx, info) => {
       const { title, description, thumbnail, length } = args.input
       const owner = ctx.user
