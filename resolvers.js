@@ -1,7 +1,9 @@
+import { ForbiddenError } from 'apollo-server-core'
 import { getUserById } from './models/user.js'
 import {
   createVideo,
   getVideoById,
+  deleteVideoById,
   getVideosByOwnerId,
 } from './models/video.js'
 import { requireUser } from './permissions.js'
@@ -15,6 +17,7 @@ const resolvers = {
       return getVideoById(id)
     },
   },
+
   Video: {
     id: (parent) => parent._id.toString(),
     owner: (parent, args, ctx, info) => {
@@ -50,6 +53,27 @@ const resolvers = {
         success: true,
         message: `Video created successfully`,
         video: newVideo,
+      }
+    }),
+
+    deleteVideo: requireUser(async (_, args, ctx, info) => {
+      const { id } = args.input
+      const owner = ctx.user
+
+      const video = await getVideoById(id)
+      if (!video)
+        return {
+          success: false,
+          message: `Video does not exist`,
+        }
+
+      if (video.owner.toString() !== owner._id.toString())
+        throw ForbiddenError('Cannot update this resource')
+
+      await deleteVideoById(id)
+      return {
+        success: true,
+        message: `Video deleted successfully`,
       }
     }),
   },

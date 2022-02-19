@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'apollo-server-express'
-import { getUserById } from './models/user'
+import { getUserById } from './models/user.js'
 
 // Require that the user must be authenticated and exists in the database
 export function requireUser(resolver) {

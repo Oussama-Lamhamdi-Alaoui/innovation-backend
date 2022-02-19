@@ -43,3 +43,5 @@ export const createVideo = async ({
   })
   return video
 }
+
+export const deleteVideoById = async (id) => Video.findByIdAndDelete(id)
