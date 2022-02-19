@@ -1,5 +1,4 @@
-import pkg from 'mongoose'
-const { Schema } = pkg
+import { Schema, model } from 'mongoose'
 import bcrypt from 'bcrypt'
 
 const SALT_ROUNDS = 10
