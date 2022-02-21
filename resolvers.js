@@ -1,5 +1,10 @@
 import { ForbiddenError } from 'apollo-server-core'
-import { getUserById, getUserByEmail, comparePassword } from './models/user.js'
+import {
+  getUserById,
+  getUserByEmail,
+  comparePassword,
+  createUser,
+} from './models/user.js'
 import {
   createVideo,
   getVideoById,
@@ -65,6 +70,41 @@ const resolvers = {
       return {
         success: true,
         message: `Logged in succesfuly`,
+        token: token,
+      }
+    },
+
+    signUp: async (_, args, ctx, info) => {
+      const { email, password, name } = args.input
+
+      //Dummy validation
+      if (!email || !password || !name)
+        return {
+          success: false,
+          message: `Valid Email, Name and Password are Required`,
+        }
+
+      const userWithEmail = await getUserByEmail(email)
+
+      if (userWithEmail)
+        return {
+          success: false,
+          message: `Email is already registered`,
+        }
+
+      const newUser = await createUser({
+        email,
+        name,
+        password,
+      })
+      //Before returning the user you might want to add a DTO layer
+      //to Stop information such as password, _id (internal ID) from being sent.
+
+      const token = await generateJWT({ user: newUser })
+
+      return {
+        success: true,
+        message: `Signed up successfuly`,
         token: token,
       }
     },
