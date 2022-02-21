@@ -17,10 +17,22 @@ const typeDefs = gql`
     email: String!
   }
 
+  type SignUpResponse {
+    success: Boolean!
+    message: String!
+    token: String
+  }
+
   type LoginResponse {
     success: Boolean!
     message: String!
     token: String
+  }
+
+  input SignUpInput {
+    email: String!
+    password: String!
+    name: String!
   }
 
   input LoginInput {
@@ -54,6 +66,7 @@ const typeDefs = gql`
     addVideo(input: AddVideoInput!): AddVideoResponse!
     deleteVideo(input: DeleteVideoInput!): DeleteVideoResponse!
     login(input: LoginInput!): LoginResponse!
+    signUp(input: SignUpInput!): SignUpResponse!
   }
 
   type Query {
