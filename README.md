@@ -153,4 +153,8 @@ LAACHIR Ayoub - laachir98ayoub@gmail.com
 
 LAMHAMDI ALAOUI Oussama - olamhamdialaoui@gmail.com
 
+CHIGR NIIMA - niimachigr@gmail.com
+
+ATICHE SOUFYANE - sof.atiche@gmail.com
+
 <p align="right">(<a href="#top">back to top</a>)</p>
